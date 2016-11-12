@@ -14,7 +14,7 @@ public class PrimAlgorithmTraversel {
 							  new Edge(5,7,2),
 							  new Edge(6,7,1),
 							  new Edge(8,5,1));
-		System.out.println("ÌÏÄ ìèíàâà ïğåç ğåçáğà: ");
+		System.out.println("ĞœĞŸĞ” Ğ¼Ğ¸Ğ½Ğ°Ğ²Ğ° Ğ¿Ñ€ĞµĞ· Ñ€ĞµĞ±Ñ€Ğ°: ");
 		graph.primAlgorithmTraversal(START_VERTEX).forEach(edge->System.out.println(edge));
 		
 	}	
