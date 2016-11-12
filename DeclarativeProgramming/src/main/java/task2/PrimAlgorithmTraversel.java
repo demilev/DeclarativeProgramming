@@ -1,6 +1,7 @@
 ﻿package task2;
 
 public class PrimAlgorithmTraversel {
+	
 	public static final int START_VERTEX=1;
 	
 	public static void main(String[] args) {
@@ -17,5 +18,6 @@ public class PrimAlgorithmTraversel {
 							  new Edge(8,5,1));
 		System.out.println("МПД минава през ребра: ");
 		graph.primAlgorithmTraversal(START_VERTEX).forEach(edge->System.out.println(edge));
+	
 	}	
 }

@@ -70,7 +70,6 @@ public class Graph {
 					private Edge getCheapestEdge(HashSet<Edge> listOfPossibleEdges) {
 						return Collections.min(listOfPossibleEdges);
 					}
-
 				};
 			}
 
