@@ -1,4 +1,4 @@
-package task2;
+п»їpackage task2;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -22,7 +22,7 @@ public class Graph {
 		addVertex(edge.from());
 		addVertex(edge.to());
 		edges.get(edge.from()).add(edge);
-		//добавяме и противоположното ребро, за да може графът да е неориентиран
+		//РґРѕР±Р°РІСЏРјРµ Рё РїСЂРѕС‚РёРІРѕРїРѕР»РѕР¶РЅРѕС‚Рѕ СЂРµР±СЂРѕ, Р·Р° РґР° РјРѕР¶Рµ РіСЂР°С„СЉС‚ РґР° Рµ РЅРµРѕСЂРёРµРЅС‚РёСЂР°РЅ
 		edges.get(edge.to()).add(edge.oposite()); 
 	}
 
