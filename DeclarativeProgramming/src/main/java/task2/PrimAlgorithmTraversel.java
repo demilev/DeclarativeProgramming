@@ -1,7 +1,8 @@
-package task2;
+ï»¿package task2;
 
 public class PrimAlgorithmTraversel {
 	public static final int START_VERTEX=1;
+	
 	public static void main(String[] args) {
 		Graph graph=new Graph(new Edge(1,2,5),
 							  new Edge(1,8,6),
@@ -14,8 +15,7 @@ public class PrimAlgorithmTraversel {
 							  new Edge(5,7,2),
 							  new Edge(6,7,1),
 							  new Edge(8,5,1));
-		System.out.println("ÌÏÄ ìèíàâà ïğåç ğåçáğà: ");
+		System.out.println("ĞœĞŸĞ” Ğ¼Ğ¸Ğ½Ğ°Ğ²Ğ° Ğ¿Ñ€ĞµĞ· Ñ€ĞµĞ±Ñ€Ğ°: ");
 		graph.primAlgorithmTraversal(START_VERTEX).forEach(edge->System.out.println(edge));
-		
 	}	
 }
