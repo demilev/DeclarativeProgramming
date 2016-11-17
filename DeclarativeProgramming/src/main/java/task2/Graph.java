@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
@@ -46,14 +47,21 @@ public class Graph {
 
 					@Override
 					public Edge next() {
+						/*
 						HashSet<Edge> cheapestEdgesToUnvisitedVerices = visitedVertices.stream()
 								.map(vertex -> edges.get(vertex.intValue()))
 								.map(listOfEdges -> getPossibleEdges(listOfEdges))
 								.map(listOfPossibleEdges -> getCheapestEdge(listOfPossibleEdges))
 								.collect(Collectors.toCollection(HashSet::new));
 						Edge result=Collections.min(cheapestEdgesToUnvisitedVerices);
-						visitedVertices.add(result.to());
-						return result;
+						*/
+						Optional<Edge> result=visitedVertices.stream()
+								.map(vertex -> edges.get(vertex.intValue()))
+								.map(listOfEdges -> getPossibleEdges(listOfEdges))
+								.map(listOfPossibleEdges -> getCheapestEdge(listOfPossibleEdges))
+								.min((e1,e2)->(e1.price()-e2.price()));
+						visitedVertices.add(result.get().to());
+						return result.get();
 					}
 
 					private HashSet<Edge> getPossibleEdges(HashSet<Edge> listOfEdges) {
