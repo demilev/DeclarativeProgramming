@@ -1,4 +1,4 @@
-package task4;
+п»їpackage task4;
 
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -17,33 +17,33 @@ public class HeldKarpAlgorithm {
 	}
 
 	/*
-	 * рекурсивна функция, която строи VertexSetLast обкета по алгоритъма на
-	 * Хелд и Карп
+	 * СЂРµРєСѓСЂСЃРёРІРЅР° С„СѓРЅРєС†РёСЏ, РєРѕСЏС‚Рѕ СЃС‚СЂРѕРё VertexSetLast РѕР±РєРµС‚Р° РїРѕ Р°Р»РіРѕСЂРёС‚СЉРјР° РЅР°
+	 * РҐРµР»Рґ Рё РљР°СЂРї
 	 */
 	private VertexSetLast solution(Set<Integer> verticesToTraverse, Integer lastVertex) {
 	
-		// дъното на рекусрията
+		// РґСЉРЅРѕС‚Рѕ РЅР° СЂРµРєСѓСЃСЂРёСЏС‚Р°
 		if (verticesToTraverse.isEmpty())
 			return new VertexSetLast(lastVertex, verticesToTraverse, new VertexSetLast(startVertex, null, null, 0),
 					graph.getEdgePrice(startVertex, lastVertex));
 		/*
-		 * ако множеството, което трябва да се обходи не е празно, генерираме
-		 * предишните VertexSetLast обекти, чрез рекурентно извикване на
+		 * Р°РєРѕ РјРЅРѕР¶РµСЃС‚РІРѕС‚Рѕ, РєРѕРµС‚Рѕ С‚СЂСЏР±РІР° РґР° СЃРµ РѕР±С…РѕРґРё РЅРµ Рµ РїСЂР°Р·РЅРѕ, РіРµРЅРµСЂРёСЂР°РјРµ
+		 * РїСЂРµРґРёС€РЅРёС‚Рµ VertexSetLast РѕР±РµРєС‚Рё, С‡СЂРµР· СЂРµРєСѓСЂРµРЅС‚РЅРѕ РёР·РІРёРєРІР°РЅРµ РЅР°
 		 * solution
 		 */
 		List<VertexSetLast> previous = new LinkedList<>();
 		verticesToTraverse.forEach(v -> putInPrevious(v, previous, verticesToTraverse));
 		
-		// от тях намираме минималният
+		// РѕС‚ С‚СЏС… РЅР°РјРёСЂР°РјРµ РјРёРЅРёРјР°Р»РЅРёСЏС‚
 		 
 		Optional<VertexSetLast> min = previous.stream()
 				.min((x, y) -> (x.getPrice() + graph.getEdgePrice(startVertex, x.getLast())
 						- (y.getPrice() + graph.getEdgePrice(startVertex, y.getLast()))));
 		/*
-		 * и връщаме финалния обект като проверката дали startVertex е различен
-		 * от lastVertex е необходима, защото приемаме, че няма примки в графа;
-		 * другият вариант за избягване на тази проверка е добавяне на фалшиво
-		 * ребро от startVertex към startVertex с цена 0
+		 * Рё РІСЂСЉС‰Р°РјРµ С„РёРЅР°Р»РЅРёСЏ РѕР±РµРєС‚ РєР°С‚Рѕ РїСЂРѕРІРµСЂРєР°С‚Р° РґР°Р»Рё startVertex Рµ СЂР°Р·Р»РёС‡РµРЅ
+		 * РѕС‚ lastVertex Рµ РЅРµРѕР±С…РѕРґРёРјР°, Р·Р°С‰РѕС‚Рѕ РїСЂРёРµРјР°РјРµ, С‡Рµ РЅСЏРјР° РїСЂРёРјРєРё РІ РіСЂР°С„Р°;
+		 * РґСЂСѓРіРёСЏС‚ РІР°СЂРёР°РЅС‚ Р·Р° РёР·Р±СЏРіРІР°РЅРµ РЅР° С‚Р°Р·Рё РїСЂРѕРІРµСЂРєР° Рµ РґРѕР±Р°РІСЏРЅРµ РЅР° С„Р°Р»С€РёРІРѕ
+		 * СЂРµР±СЂРѕ РѕС‚ startVertex РєСЉРј startVertex СЃ С†РµРЅР° 0
 		 */
 		VertexSetLast minDistance = new VertexSetLast(lastVertex, verticesToTraverse, min.get(),
 				min.get().getPrice() + (startVertex != lastVertex ? graph.getEdgePrice(startVertex, lastVertex) : 0));

@@ -1,4 +1,4 @@
-package task4;
+п»їpackage task4;
 
 import java.util.Iterator;
 import java.util.Set;
@@ -6,16 +6,16 @@ import java.util.stream.Stream;
 import java.util.stream.StreamSupport;
 
 /*
- * Обект, който представлява 
+ * РћР±РµРєС‚, РєРѕР№С‚Рѕ РїСЂРµРґСЃС‚Р°РІР»СЏРІР° 
  * S (veritcesToTraverse) < {2, . . . , N} of vertices and, 
  * for c (lastVertex) from S, let D(S, c) be the minimum distance (price), 
  * starting at vertex 1(startingVertex from class HeldKarpAlgorithm), 
  * visiting all vertices in S and finishing at city c.
  * minPrevious - the second-to-last vertex to x from set S. 
  * Used for constructing the TSP path back at the end.
- * (пазим откъде сме дошли, за да можем да възстановим пътя)
+ * (РїР°Р·РёРј РѕС‚РєСЉРґРµ СЃРјРµ РґРѕС€Р»Рё, Р·Р° РґР° РјРѕР¶РµРј РґР° РІСЉР·СЃС‚Р°РЅРѕРІРёРј РїСЉС‚СЏ)
  * source : wikipedia
- * не успях да избера подходящо име за класа
+ * РЅРµ СѓСЃРїСЏС… РґР° РёР·Р±РµСЂР° РїРѕРґС…РѕРґСЏС‰Рѕ РёРјРµ Р·Р° РєР»Р°СЃР°
  */
 public class VertexSetLast {
 	private Integer lastVertex;
@@ -39,8 +39,8 @@ public class VertexSetLast {
 	}
 
 	/*
-	 * функцията връща поток от върховете на минималния път, тук влиза в
-	 * употреба minPrevious
+	 * С„СѓРЅРєС†РёСЏС‚Р° РІСЂСЉС‰Р° РїРѕС‚РѕРє РѕС‚ РІСЉСЂС…РѕРІРµС‚Рµ РЅР° РјРёРЅРёРјР°Р»РЅРёСЏ РїСЉС‚, С‚СѓРє РІР»РёР·Р° РІ
+	 * СѓРїРѕС‚СЂРµР±Р° minPrevious
 	 */
 	public Stream<Integer> getPath() {
 		Iterable<Integer> getPathIterable = new Iterable<Integer>() {
