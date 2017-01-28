@@ -43,4 +43,8 @@ public class Graph {
 		return distanceMatrix.get(startVertex).get(lastVertex);
 	}
 
+	public boolean containsEdge(Integer from, Integer to) {
+		return distanceMatrix.containsKey(from) && distanceMatrix.get(from).containsKey(to);
+	}
+
 }

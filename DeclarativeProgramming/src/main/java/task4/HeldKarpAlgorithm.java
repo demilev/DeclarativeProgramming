@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class HeldKarpAlgorithm {
 
@@ -27,44 +28,54 @@ public class HeldKarpAlgorithm {
 			return new VertexSetLast(lastVertex, verticesToTraverse, new VertexSetLast(startVertex, null, null, 0),
 					graph.getEdgePrice(startVertex, lastVertex));
 		/*
-		 * ако множеството, което трябва да се обходи не е празно, генерираме
-		 * предишните VertexSetLast обекти, чрез рекурентно извикване на
-		 * solution
+		 * ако множеството, което трябва да се обходи, не е празно, генерираме
+		 * предишните VertexSetLast обекти чрез рекурентно извикване на
+		 * solution и от тях намираме минималния
 		 */
-		List<VertexSetLast> previous = new LinkedList<>();
-		verticesToTraverse.forEach(v -> putInPrevious(v, previous, verticesToTraverse));
-		
-		// от тях намираме минималният
-		 
-		Optional<VertexSetLast> min = previous.stream()
-				.min((x, y) -> (x.getPrice() + graph.getEdgePrice(startVertex, x.getLast())
-						- (y.getPrice() + graph.getEdgePrice(startVertex, y.getLast()))));
+		Optional<VertexSetLast> min = 
+				verticesToTraverse.stream()
+		 				  		  .filter(v -> graph.containsEdge(v,lastVertex))
+		 				  		  .map(v -> solution(getAllExcept(v,verticesToTraverse),v))
+		 				  		  .min((x, y) -> (x.getPrice() + graph.getEdgePrice(x.getLast(),lastVertex)
+		 				  								- (y.getPrice() + graph.getEdgePrice(y.getLast(),lastVertex))));
 		/*
-		 * и връщаме финалния обект като проверката дали startVertex е различен
-		 * от lastVertex е необходима, защото приемаме, че няма примки в графа;
-		 * другият вариант за избягване на тази проверка е добавяне на фалшиво
-		 * ребро от startVertex към startVertex с цена 0
+		 * необходима проверка, защото графът може да не е силно свързан или въобще
+		 * може да не е свързан
 		 */
-		VertexSetLast minDistance = new VertexSetLast(lastVertex, verticesToTraverse, min.get(),
-				min.get().getPrice() + (startVertex != lastVertex ? graph.getEdgePrice(startVertex, lastVertex) : 0));
+		if(!min.isPresent())
+			return new VertexSetLast(lastVertex, verticesToTraverse, null, Integer.MAX_VALUE);
+		
+		VertexSetLast previous = min.get();
+		VertexSetLast minDistance = new VertexSetLast(lastVertex, verticesToTraverse, previous,
+				previous.getPrice() + graph.getEdgePrice(previous.getLast(),lastVertex));
 
 		return minDistance;
 	}
-
-	private void putInPrevious(Integer vertex, List<VertexSetLast> previous, Set<Integer> verticesToTraverse) {
-		Set<Integer> remainingVerticesToTraverse = new HashSet<>(verticesToTraverse);
-		remainingVerticesToTraverse.remove(vertex);
-		previous.add(solution(remainingVerticesToTraverse, vertex));
+	private Set<Integer> getAllExcept(Integer vertex, Set<Integer> verticesToTraverse){
+		Set<Integer> result = new HashSet<>(verticesToTraverse);
+		result.remove(vertex);
+		return result;
 	}
 
 	public void printShortestPath() {
-		StringBuilder sb = new StringBuilder();
-
 		Set<Integer> vertices = graph.getVertices();
 		vertices.remove(startVertex);
-		solution(vertices, startVertex).getPath().forEach(v -> sb.append(v + " -> "));
-
-		System.out.println("The shortest path solving the TSP is : " + sb.substring(0, sb.length() - 4));
+		
+		VertexSetLast solution = solution(vertices, startVertex);
+		
+		/*
+		 * проверка дали сме върнали коректен път, защото функцията solution не хвърля
+		 * exception (защото я викам при map-ването), а връща служебна стойност 
+		 */
+		if(solution.getPath().count() != vertices.size() + 2){
+			System.out.println("The TSP problem has no solution for this graph.");
+			return;
+		}
+		
+		StringBuilder sb = new StringBuilder();
+		solution.getPath().forEach(v -> sb.append(v + " - "));
+		// малка игра с форматирането на изхода, защото получаваме пътя наобратно
+		System.out.println("The shortest path solving the TSP is : " + sb.reverse().substring(3,sb.length()).replace("-", "->"));
 	}
 
 	public static void main(String[] args) {
@@ -85,7 +96,19 @@ public class HeldKarpAlgorithm {
 		graph.addEdge(3, 0, 10);
 		graph.addEdge(3, 1, 4);
 		graph.addEdge(3, 2, 8);
+		
+//		graph.addEdge(0, 1, 3);
+//		graph.addEdge(0, 3, 4);
+//		
+//		graph.addEdge(1, 3, 1);
+//		graph.addEdge(1, 0, 2);
+//		
+//		graph.addEdge(2, 1, 5);
+//		graph.addEdge(2, 0, 1);
+//		
+//		graph.addEdge(3, 2, 7);
 
+		
 		new HeldKarpAlgorithm(graph, 0).printShortestPath();
 	}
 }
